@@ -3,8 +3,8 @@ import os
 from openai import OpenAI
 
 client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY", "sk-4jhwfa2S8ka97pGZ41KDMw2m2Giq3ddaRcnJ19LHgXv91MWl"),
-    base_url=os.environ.get("OPENAI_BASE_URL", "https://api.bltcy.ai/v1"),
+    api_key=os.environ.get("OPENAI_API_KEY", ""),
+    base_url=os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1"),
 )
 
 MODEL = os.environ.get("LLM_MODEL", "gpt-4o-mini")
