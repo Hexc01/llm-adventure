@@ -4,8 +4,9 @@
       <div class="msg-content">
         <span v-if="msg.role === 'player'" class="label">你</span>
         <span v-else-if="msg.role === 'narrator'" class="label">旁白</span>
+        <span v-else-if="msg.role === 'combat'" class="label combat-label">战斗</span>
         <span v-else class="label">系统</span>
-        <p>{{ msg.text }}</p>
+        <p style="white-space: pre-line;">{{ msg.text }}</p>
       </div>
     </div>
     <div v-if="game.loading" class="message system">
@@ -67,6 +68,18 @@ watch(() => game.messages.length, async () => {
 
 .message.system .label {
   color: #ff6a6a;
+}
+
+.message.combat .label {
+  color: #ff9a6a;
+}
+
+.message.combat p {
+  color: #ffb38a;
+}
+
+.combat-label {
+  color: #ff6a6a !important;
 }
 
 .message p {

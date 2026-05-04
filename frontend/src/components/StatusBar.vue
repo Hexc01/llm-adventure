@@ -11,6 +11,14 @@
       <span class="label">位置</span>
       <span class="value">{{ game.state.location }}</span>
     </div>
+    <div v-if="game.state.quest?.stage !== 'undiscovered'" class="stat quest-stat">
+      <span class="label">任务</span>
+      <span class="value quest-value" :class="questClass">{{ questStageName }}</span>
+    </div>
+    <div v-if="game.state.inventory?.length > 0" class="stat">
+      <span class="label">物品</span>
+      <span class="value">{{ game.state.inventory.length }}件</span>
+    </div>
   </div>
 </template>
 
@@ -26,6 +34,29 @@ const hpClass = computed(() => {
   if (hpPercent.value > 30) return 'hp-mid'
   return 'hp-low'
 })
+
+const stageNames = {
+  undiscovered: '未发现',
+  rumor: '传闻',
+  clues: '寻找线索',
+  lair: '找到巢穴',
+  boss: '讨伐Boss',
+  treasure: '获得宝藏',
+  escape: '逃离小镇',
+  victory: '已完成',
+}
+
+const questStageName = computed(() => {
+  const stage = game.state.quest?.stage || 'undiscovered'
+  return stageNames[stage] || stage
+})
+
+const questClass = computed(() => {
+  const stage = game.state.quest?.stage || 'undiscovered'
+  if (stage === 'victory') return 'quest-victory'
+  if (stage === 'boss' || stage === 'treasure' || stage === 'escape') return 'quest-urgent'
+  return 'quest-normal'
+})
 </script>
 
 <style scoped>
@@ -36,6 +67,7 @@ const hpClass = computed(() => {
   background: #111118;
   border: 1px solid #2a2a3a;
   border-radius: 8px;
+  flex-wrap: wrap;
 }
 
 .stat {
@@ -53,6 +85,22 @@ const hpClass = computed(() => {
 .value {
   font-size: 0.9rem;
   color: #d4c8a8;
+}
+
+.quest-value {
+  font-weight: bold;
+}
+
+.quest-normal {
+  color: #c9a84c;
+}
+
+.quest-urgent {
+  color: #ff9800;
+}
+
+.quest-victory {
+  color: #4caf50;
 }
 
 .hp-bar {

@@ -8,6 +8,7 @@
     <div v-if="!game.sessionId" class="start-screen">
       <div class="start-content">
         <p>一段未知的旅程等待着你……</p>
+        <p class="start-hint">在被诅咒的小镇中，寻找隐藏的远古宝藏，击败守护龙，逃离诅咒！</p>
         <button class="btn-primary" @click="game.startGame" :disabled="game.loading">
           {{ game.loading ? '正在连接...' : '开始冒险' }}
         </button>
@@ -16,6 +17,8 @@
 
     <div v-else class="game-container">
       <StatusBar />
+      <QuestTracker />
+      <CombatPanel />
       <div class="main-area">
         <ChatWindow />
         <ChoicePanel />
@@ -30,6 +33,8 @@ import { useGameStore } from './stores/game'
 import ChatWindow from './components/ChatWindow.vue'
 import ChoicePanel from './components/ChoicePanel.vue'
 import StatusBar from './components/StatusBar.vue'
+import CombatPanel from './components/CombatPanel.vue'
+import QuestTracker from './components/QuestTracker.vue'
 import Inventory from './components/Inventory.vue'
 
 const game = useGameStore()
@@ -90,8 +95,16 @@ body {
 
 .start-content p {
   font-size: 1.2rem;
-  margin-bottom: 30px;
+  margin-bottom: 12px;
   color: #8a8070;
+}
+
+.start-hint {
+  font-size: 0.9rem !important;
+  color: #666 !important;
+  margin-bottom: 30px !important;
+  max-width: 400px;
+  line-height: 1.6;
 }
 
 .btn-primary {
